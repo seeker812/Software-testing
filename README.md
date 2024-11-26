@@ -121,5 +121,7 @@ The test cases aim to bypass the client-side validations implemented in the `Stu
  ![result1](screenshots/result_1.png)
   **Result of "studentDetails test cases" **
    ![result1](screenshots/result_2.png)
+    **Result of "stryker" **
+     ![result1](screenshots/stryker.png)
   
 
