@@ -96,4 +96,25 @@ The test cases aim to bypass the client-side validations implemented in the `Stu
 - **Result:** The server rejects bypassed invalid inputs.  
 
 ---
+## 5. Tools Used  
+
+### Jest  
+- **Purpose:** Jest was used for unit testing the React component, form validation, and form submission behavior.  
+- **Usage:** Jest allows simulating user interactions such as typing in form fields and submitting the form, enabling the verification of both client-side validation logic and server interaction for valid/invalid inputs.  
+- **Key Features:**  
+  - Mock functions to simulate user actions.  
+  - Assertion methods to verify if the component behaves correctly after input changes or form submission.
+
+### React Testing Library  
+- **Purpose:** React Testing Library was used for rendering the React components and interacting with the form elements in a simulated browser environment.  
+- **Usage:** This library helps simulate real-world user behavior by querying DOM elements (such as input fields and buttons) and firing events (such as `change` and `click`) to ensure the form's behavior is as expected.  
+- **Key Features:**  
+  - Rendering React components into a test DOM.  
+  - Queries for elements like `getByLabelText`, `getByText` to interact with and assert element presence in the rendered component.
+
+### Stryker(Mutation Tool) 
+- **Purpose:** Stryker was used to alter client-side validation scripts in the React application to simulate weak or bypassed validations.  
+- **Usage:** The mutation tool was utilized to modify the `validationRules` object in the client-side code, introducing intentional errors into the validation regex patterns. This allowed testing of how the form behaves when the validation rules are bypassed and how the server reacts to invalid input.
+ --- 
+ ## 6. Testing Results
 
