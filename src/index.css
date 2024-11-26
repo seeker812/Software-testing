@@ -113,3 +113,55 @@ button {
 .line {
   display: inline-block;
 }
+
+/* Style for Role label */
+label[for="role"] {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Style for the Role dropdown */
+#role {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #000;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+/* Focus state for the dropdown */
+#role:focus {
+  outline: 2px solid dodgerblue;
+  border-color: dodgerblue;
+}
+
+/* Optional: Adjust the dropdown arrow (modern browsers) */
+#role::-ms-expand {
+  display: none; /* Hide the default arrow in IE */
+}
+
+#role {
+  appearance: none; /* Remove native styling for dropdown */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23000' d='M2 0L0 2h4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 0.65rem auto;
+}
+
+/* Error styling for invalid role */
+.invalid-role {
+  border: 1px solid red;
+  background-color: #ffe6e6;
+}
+
+.invalid-role-message {
+  font-size: 0.75rem;
+  color: red;
+  margin-top: 0.25rem;
+  display: block;
+}

@@ -1,15 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "./details.css";
+import { useAuth } from "./hooks/useAuth";
+import axios from "./api/axios";
 
+const STUDENT_URL = "/student-details";
 const validationRules = {
   name: { regex: /^[A-Za-z\s]+$/, message: "Only alphabets are allowed." },
-  mothersName: { regex: /^[A-Za-z\s]+$/, message: "Only alphabets are allowed." },
-  fathersName: { regex: /^[A-Za-z\s]+$/, message: "Only alphabets are allowed." },
+  mothersName: {
+    regex: /^[A-Za-z\s]+$/,
+    message: "Only alphabets are allowed.",
+  },
+  fathersName: {
+    regex: /^[A-Za-z\s]+$/,
+    message: "Only alphabets are allowed.",
+  },
   address: {
     regex: /^[A-Za-z0-9\s\-\/]+$/,
-    message: "Only letters, numbers, spaces, hyphens (-), and slashes (/) are allowed.",
+    message:
+      "Only letters, numbers, spaces, hyphens (-), and slashes (/) are allowed.",
   },
   city: { regex: /^[A-Za-z\s]+$/, message: "Only alphabets are allowed." },
   phoneNumber: { regex: /^\d{10}$/, message: "Must be exactly 10 digits." },
@@ -29,8 +39,9 @@ const StudentDetails = () => {
   const [errMsg, setErrMsg] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const errRef = useRef();
-
+  const { auth } = useAuth();
   // Validate all fields whenever formData or validFields changes
+
   useEffect(() => {
     const allFieldsValid = Object.keys(validationRules).every(
       (key) => validFields[key] && formData[key]
@@ -41,10 +52,13 @@ const StudentDetails = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setValidFields({ ...validFields, [name]: validationRules[name].regex.test(value) });
+    setValidFields({
+      ...validFields,
+      [name]: validationRules[name].regex.test(value),
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check all fields for validity
@@ -56,10 +70,34 @@ const StudentDetails = () => {
       setErrMsg("Please fill out all fields correctly.");
       return;
     }
-
-    // If all fields are valid
+    console.log(formData);
     setErrMsg("");
-    alert("Form submitted successfully!");
+    try {
+      const response = await axios.post(STUDENT_URL, {
+        userId: auth?.user, // Include userId
+        ...formData, // Spread other form data
+      });
+
+      if (response.status === 200) {
+        setFormData({});
+        setValidFields({});
+        setTouchedFields({});
+        alert("Details saved successfully!");
+      } else {
+        setErrMsg(response.data.message || "Failed to save details");
+      }
+    } catch (error) {
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        setErrMsg(error.response.data.message || "Failed to save details");
+      } else if (error.request) {
+        // No response was received
+        setErrMsg("No response from server");
+      } else {
+        // Something else happened
+        setErrMsg("Server error");
+      }
+    }
   };
 
   return (
@@ -73,16 +111,28 @@ const StudentDetails = () => {
           <InputField
             key={key}
             id={key}
-            label={key.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) + " :"}
+            label={
+              key
+                .replace(/([A-Z])/g, " $1")
+                .replace(/^./, (str) => str.toUpperCase()) + " :"
+            }
             value={formData[key] || ""}
             isValid={validFields[key]}
             touched={touchedFields[key]}
             onChange={handleChange}
             onFocus={() => setTouchedFields({ ...touchedFields, [key]: true })}
             validationMessage={
-              touchedFields[key] && !validFields[key] ? validationRules[key].message : null
+              touchedFields[key] && !validFields[key]
+                ? validationRules[key].message
+                : null
             }
-            type={key === "dateOfBirth" ? "date" : key === "email" ? "email" : "text"}
+            type={
+              key === "dateOfBirth"
+                ? "date"
+                : key === "email"
+                ? "email"
+                : "text"
+            }
           />
         ))}
         <button type="submit" disabled={!isFormValid}>

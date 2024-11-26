@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1732362510548" clover="3.2.0">
+  <project timestamp="1732362510549" name="All files">
+    <metrics statements="59" coveredstatements="49" conditionals="56" coveredconditionals="46" methods="15" coveredmethods="12" elements="130" coveredelements="107" complexity="0" loc="59" ncloc="59" packages="2" files="2" classes="2"/>
+    <package name="src">
+      <metrics statements="59" coveredstatements="49" conditionals="56" coveredconditionals="46" methods="15" coveredmethods="12"/>
+      <file name="Register.jsx" path="/mnt/58DCFCE8DCFCC174/software-testing/src/Register.jsx">
+        <metrics statements="59" coveredstatements="49" conditionals="56" coveredconditionals="46" methods="15" coveredmethods="12"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="32" type="stmt"/>
+        <line num="17" count="32" type="stmt"/>
+        <line num="19" count="32" type="stmt"/>
+        <line num="20" count="32" type="stmt"/>
+        <line num="21" count="32" type="stmt"/>
+        <line num="23" count="32" type="stmt"/>
+        <line num="24" count="32" type="stmt"/>
+        <line num="25" count="32" type="stmt"/>
+        <line num="27" count="32" type="stmt"/>
+        <line num="28" count="32" type="stmt"/>
+        <line num="29" count="32" type="stmt"/>
+        <line num="31" count="32" type="stmt"/>
+        <line num="32" count="32" type="stmt"/>
+        <line num="33" count="32" type="stmt"/>
+        <line num="34" count="5" type="stmt"/>
+        <line num="37" count="32" type="stmt"/>
+        <line num="38" count="7" type="stmt"/>
+        <line num="39" count="7" type="stmt"/>
+        <line num="40" count="7" type="stmt"/>
+        <line num="41" count="7" type="stmt"/>
+        <line num="44" count="32" type="stmt"/>
+        <line num="45" count="10" type="stmt"/>
+        <line num="46" count="10" type="stmt"/>
+        <line num="47" count="10" type="stmt"/>
+        <line num="48" count="10" type="stmt"/>
+        <line num="49" count="10" type="stmt"/>
+        <line num="50" count="10" type="stmt"/>
+        <line num="53" count="32" type="stmt"/>
+        <line num="54" count="12" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="63" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="82" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="84" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="87" count="0" type="stmt"/>
+        <line num="92" count="32" type="stmt"/>
+        <line num="128" count="2" type="stmt"/>
+        <line num="132" count="5" type="stmt"/>
+        <line num="133" count="1" type="stmt"/>
+        <line num="164" count="3" type="stmt"/>
+        <line num="169" count="0" type="stmt"/>
+        <line num="170" count="1" type="stmt"/>
+        <line num="205" count="2" type="stmt"/>
+        <line num="210" count="0" type="stmt"/>
+        <line num="211" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.api">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="axios.js" path="/mnt/58DCFCE8DCFCC174/software-testing/src/api/axios.js">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+  </project>
+</coverage>

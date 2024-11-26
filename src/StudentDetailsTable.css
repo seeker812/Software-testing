@@ -1,0 +1,55 @@
+/* Styling for the table container */
+.student-details-table-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Styling for the table */
+.table-wrapper {
+  overflow-x: auto; /* Adds horizontal scrolling when content is wider */
+  max-height: 500px; /* Adjust the height as needed */
+}
+
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #080079;
+  table-layout: fixed; /* Ensures that table columns maintain a consistent width */
+}
+
+.details-table th,
+.details-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.details-table th {
+  background-color: #080808;
+  font-weight: bold;
+}
+
+.details-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.details-table tr:hover {
+  background-color: #d87c7c;
+}
+
+.details-table td {
+  max-width: 200px; /* Set max width for cells */
+  word-wrap: break-word; /* Ensures content doesn't overflow */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds '...' if content is too long */
+}
+
+/* Styling for the header */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}

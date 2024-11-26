@@ -7,9 +7,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "./api/axios";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const ROLE_REGEX = /^(User|Admin)$/; // Add validation for roles (optional)
 const REGISTER_URL = "/register";
 
 function Register() {
@@ -28,39 +30,46 @@ function Register() {
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
+  const [role, setRole] = useState("User"); // Default role
+  const [validRole, setValidRole] = useState(true); // Assume initial role is valid
+  const [roleFocus, setRoleFocus] = useState(false);
+
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+
   useEffect(() => {
     userRef.current.focus();
   }, []);
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
     setValidName(result);
   }, [user]);
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
-    console.log(result);
-    console.log(pwd);
     setValidPwd(result);
     const match = pwd === matchPwd;
     setValidMatch(match);
   }, [pwd, matchPwd]);
 
   useEffect(() => {
+    const result = ROLE_REGEX.test(role);
+    setValidRole(result);
+  }, [role]);
+
+  useEffect(() => {
     setErrMsg("");
-  }, [user, pwd, matchPwd]);
+  }, [user, pwd, matchPwd, role]);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
+    const v3 = ROLE_REGEX.test(role);
 
-    if (!v1 || !v2) {
+    if (!v1 || !v2 || !v3) {
       setErrMsg("Invalid Entry");
       return;
     }
@@ -68,15 +77,12 @@ function Register() {
     try {
       const response = await axios.post(
         REGISTER_URL,
-        JSON.stringify({ user, pwd }),
+        JSON.stringify({ user, pwd, role }),
         {
           headers: { "Content-Type": "application/json" },
-          // withCredentials: true,
         }
       );
       console.log(response.data);
-      console.log(response.accessToken);
-      console.log(JSON.stringify(response));
       setSuccess(true);
     } catch (err) {
       if (!err?.response) {
@@ -95,7 +101,9 @@ function Register() {
         <section>
           <h1>Success!</h1>
           <p>
-            <a href="#">Sign In</a>
+            <span className="line">
+              <Link to="/login">Sign In</Link>
+            </span>
           </p>
         </section>
       ) : (
@@ -109,6 +117,7 @@ function Register() {
           </p>
           <h1>Register</h1>
           <form onSubmit={handleSubmit} autoComplete="off">
+            {/* Username Field */}
             <label htmlFor="username">
               Username:
               <FontAwesomeIcon
@@ -132,7 +141,6 @@ function Register() {
               onFocus={() => setUserFocus(true)}
               onBlur={() => setUserFocus(false)}
             />
-
             <p
               id="uidnote"
               className={
@@ -147,6 +155,7 @@ function Register() {
               Letters, numbers, underscores, hyphens allowed.
             </p>
 
+            {/* Password Field */}
             <label htmlFor="password">
               Password:
               <FontAwesomeIcon
@@ -180,14 +189,10 @@ function Register() {
               Must include uppercase and lowercase letters, a number and a
               special character.
               <br />
-              Allowed special characters:{" "}
-              <span aria-label="exclamation mark">!</span>{" "}
-              <span aria-label="at symbol">@</span>{" "}
-              <span aria-label="hashtag">#</span>{" "}
-              <span aria-label="dollar sign">$</span>{" "}
-              <span aria-label="percent">%</span>
+              Allowed special characters: ! @ # $ %
             </p>
 
+            {/* Confirm Password Field */}
             <label htmlFor="confirm_pwd">
               Confirm Password:
               <FontAwesomeIcon
@@ -220,8 +225,44 @@ function Register() {
               <FontAwesomeIcon icon={faInfoCircle} />
               Must match the first password input field.
             </p>
+
+            {/* Role Dropdown */}
+            <label htmlFor="role">
+              Role:
+              <FontAwesomeIcon
+                icon={faCheck}
+                className={validRole ? "valid" : "hide"}
+              />
+              <FontAwesomeIcon
+                icon={faTimes}
+                className={!validRole ? "invalid" : "hide"}
+              />
+            </label>
+            <select
+              id="role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              onFocus={() => setRoleFocus(true)}
+              onBlur={() => setRoleFocus(false)}
+              aria-invalid={!validRole ? "true" : "false"}
+            >
+              <option value="User">User</option>
+              <option value="Admin">Admin</option>
+            </select>
+            {!validRole && roleFocus && (
+              <p className="instructions">
+                <FontAwesomeIcon icon={faInfoCircle} />
+                Select a valid role: User or Admin.
+              </p>
+            )}
+
+            {/* Submit Button */}
             <button
-              disabled={!validName || !validPwd || !validMatch ? true : false}
+              disabled={
+                !validName || !validPwd || !validMatch || !validRole
+                  ? true
+                  : false
+              }
             >
               Sign Up
             </button>
@@ -230,8 +271,7 @@ function Register() {
             Already registered?
             <br />
             <span className="line">
-              {/*put router link here*/}
-              <a href="#">Sign In</a>
+              <Link to="/login">Sign In</Link>
             </span>
           </p>
         </section>
