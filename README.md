@@ -56,7 +56,7 @@ The test cases aim to bypass the client-side validations implemented in the `Stu
   1. Render the `StudentDetails` component using a testing library.  
   2. Assert the presence of fields like "Name", "Phone Number", "Email", and others using `screen.getByLabelText()`.  
 - **Result:** All fields are correctly rendered with their labels.  
-
+ ![Form Field Rendering](screenshots/tc1.png) 
 ---
 
 ### Test Case 2: Validate Field-Level Input Constraints  
@@ -66,7 +66,7 @@ The test cases aim to bypass the client-side validations implemented in the `Stu
   2. Use `fireEvent` to simulate user interactions like focus and change.  
   3. Verify validation error messages using assertions like `screen.getByText()`.  
 - **Result:** Error messages are displayed for invalid inputs and disappear when corrected.  
-
+![Field-Level Validation](screenshots/tc2.png)
 ---
 
 ### Test Case 3: Validate Form Submission Behavior  
@@ -75,7 +75,7 @@ The test cases aim to bypass the client-side validations implemented in the `Stu
   1. Populate the form with invalid inputs and assert that the "Submit" button remains disabled.  
   2. Populate the form with valid inputs and verify that the "Submit" button is enabled and the success alert is displayed.  
 - **Result:** The form prevents submission with invalid data and submits successfully with valid data.  
-
+![Form Submission Behavior](screenshots/tc3.png)
 ---
 
 ### Test Case 4: Validate Empty and Boundary Input Cases  
@@ -84,7 +84,7 @@ The test cases aim to bypass the client-side validations implemented in the `Stu
   1. Leave mandatory fields like "Date of Birth" empty and ensure the "Submit" button is disabled.  
   2. Test fields like "Postal Code" with fewer than 5 digits or more than 6 digits and check for validation errors.  
 - **Result:** The form handles empty and boundary cases as expected.  
-
+ ![Empty and Boundary Input Cases](screenshots/tc5.png)
 ---
 
 ### Test Case 5: Bypass Validation and Mutation Testing  
@@ -94,7 +94,7 @@ The test cases aim to bypass the client-side validations implemented in the `Stu
   2. Inject invalid inputs into the form fields and submit.  
   3. Monitor server behavior for acceptance or rejection of invalid data.  
 - **Result:** The server rejects bypassed invalid inputs.  
-
+![Validation Bypass and Mutation Testing](screenshots/tc4.png)
 ---
 ## 5. Tools Used  
 
