@@ -117,4 +117,9 @@ The test cases aim to bypass the client-side validations implemented in the `Stu
 - **Usage:** The mutation tool was utilized to modify the `validationRules` object in the client-side code, introducing intentional errors into the validation regex patterns. This allowed testing of how the form behaves when the validation rules are bypassed and how the server reacts to invalid input.
  --- 
  ## 6. Testing Results
+ **Result of "Register test cases" **
+ ![result1](screenshots/result_1.png)
+  **Result of "studentDetails test cases" **
+   ![result1](screenshots/result_2.png)
+  
 
