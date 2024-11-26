@@ -6,15 +6,15 @@ This project involves testing the client-side code of a web application by desig
 
 ## 1. Code Repository  
 Link to the complete code repository:  
-[Insert Repository Link Here]  
+https://github.com/seeker812/Software-testing/tree/main  
 
 ---
 
 ## 2. Team Contributions  
-### Team Member 1: [Name]  
+### Team Member 1: Sumit singh ; Roll No. : MT2023166  
 - [Detailed contribution, e.g., designed test cases, wrote scripts, conducted testing, etc.]  
 
-### Team Member 2: [Name]  
+### Team Member 2: Ashutosh Dubey ; Roll No. : MT2023097  
 - [Detailed contribution, e.g., implemented tools, analyzed results, documented findings, etc.]  
 
 ---
