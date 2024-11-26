@@ -1,21 +1,47 @@
 # Client-Side Web Applications Testing (Bypass Testing)
 
 This project involves testing the client-side code of a web application by designing test cases to bypass client-side validation and sending changed/corrupt input to the server.
+### Project Overview  
+The application developed for testing is a login site with the following features:  
+- **User Functionality:** Users can log in and log out of the site.  
+- **Admin Functionality:** Admins can view user data but cannot modify it.  
 
+  The primary focus of testing is to identify vulnerabilities in client-side validation mechanisms, simulate bypass scenarios, and ensure the server-side validation correctly handles invalid or malicious inputs.
 ---
 
 ## 1. Code Repository  
-Link to the complete code repository:  
-https://github.com/seeker812/Software-testing/tree/main  
+Link to the frontend repository:  
+https://github.com/seeker812/Software-testing/tree/main 
+
+Link to the server repository:
+https://github.com/seeker812/software-testing-server
 
 ---
 
 ## 2. Team Contributions  
-### Team Member 1: Sumit singh ; Roll No. : MT2023166  
-- [Detailed contribution, e.g., designed test cases, wrote scripts, conducted testing, etc.]  
+### Team Member 1: Sumit singh ; Roll No. : MT2023166 
+### Contribution
+- Developed the **frontend** of the login site, including:  
+  - Designing and implementing the user interface for login and logout functionality.  
+  - Creating the admin dashboard to display user data in a user-friendly format.  
+  - Integrating form validation rules for fields like username and password.  
 
-### Team Member 2: Ashutosh Dubey ; Roll No. : MT2023097  
-- [Detailed contribution, e.g., implemented tools, analyzed results, documented findings, etc.]  
+- Contributed to generating test cases by:  
+  - Identifying key areas of client-side validation to target for bypass testing.  
+  - Assisting in testing the robustness of validation rules using mutation tools.  
+  - Providing insights on frontend behavior to refine test case design.  
+ 
+
+### Team Member 2: Ashutosh Dubey ; Roll No. : MT2023097
+### Contribution
+- Developed the **backend** for the login site, including:  
+  - Implementation of user authentication and authorization.  
+  - Designing secure endpoints for user login, logout, and admin data retrieval.  
+  - Ensuring server-side validation for inputs bypassing client-side checks.
+- Contributed to generating test cases by:  
+  - Identifying potential vulnerabilities in client-side validation mechanisms.  
+  - Collaborating on the design of test cases to simulate bypass scenarios.  
+  - Assisting in the implementation of mutation testing for the client-side scripts. 
 
 ---
 
