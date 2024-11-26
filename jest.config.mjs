@@ -168,7 +168,7 @@ const config = {
   // testPathIgnorePatterns: [
   //   "/node_modules/"
   // ],
-
+  setupFilesAfterEnv: ["<rootDir>/src/setupTests.js"],
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],
 
@@ -200,35 +200,9 @@ const config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+  moduleNameMapper: {
+    "\\.(css|less|sass|scss)$": "identity-obj-proxy"
+  }
 };
 
 export default config;
-
-// /** @type {import('jest').Config} */
-// const config = {
-//   clearMocks: true,
-//   collectCoverage: true,
-//   coverageDirectory: "coverage",
-//   coveragePathIgnorePatterns: ["/node_modules/", "\\.test\\.js"],
-//   testEnvironment: "jsdom",
-//   roots: ["<rootDir>/src/test"],
-//   testMatch: ["**/src/test/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[tj]s?(x)"],
-//   transform: {
-//     "^.+\\.[t|j]sx?$": "babel-jest",
-//   },
-//   setupFilesAfterEnv: ["<rootDir>/src/setupTests.js"],
-//   coverageThreshold: {
-//     global: {
-//       branches: 80,
-//       functions: 80,
-//       lines: 80,
-//       statements: 80,
-//     },
-//   },
-//   verbose: true,
-//   moduleNameMapper: {
-//     "\\.(css|less)$": "identity-obj-proxy",
-//   },
-// };
-
-// export default config;

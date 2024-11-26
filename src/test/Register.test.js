@@ -4,67 +4,67 @@ import Register from "../Register"; // Adjust this path if necessary
 import axios from "../api/axios"; // Mock axios if needed
 import React from "react";
 // Mocking axios to simulate successful registration response
-jest.mock("axios");
+jest.mock("../api/axios");
+
 import "@testing-library/jest-dom";
 describe("Register Component", () => {
-  // test("renders register form", () => {
-  //   render(<Register />);
+  test("renders register form", () => {
+    render(<Register />);
 
-  //   // Check if form elements are present
-  //   expect(screen.getByLabelText("Username:")).toBeInTheDocument();
-  //   expect(screen.getByLabelText("Password:")).toBeInTheDocument();
-  //   expect(screen.getByLabelText("Confirm Password:")).toBeInTheDocument();
-  //   expect(screen.getByText("Sign Up")).toBeInTheDocument();
-  // });
+    // Check if form elements are present
+    expect(screen.getByLabelText("Username:")).toBeInTheDocument();
+    expect(screen.getByLabelText("Password:")).toBeInTheDocument();
+    expect(screen.getByLabelText("Confirm Password:")).toBeInTheDocument();
+    expect(screen.getByText("Sign Up")).toBeInTheDocument();
+  });
 
-  // test("validates username correctly", () => {
-  //   render(<Register />);
+  test("validates username correctly", () => {
+    render(<Register />);
 
-  //   const usernameInput = screen.getByLabelText("Username:");
-  //   fireEvent.change(usernameInput, { target: { value: "abc" } }); // Invalid username
-  //   fireEvent.blur(usernameInput);
+    const usernameInput = screen.getByLabelText("Username:");
+    fireEvent.change(usernameInput, { target: { value: "abc" } }); // Invalid username
+    fireEvent.blur(usernameInput);
 
-  //   const errorMessage = screen.getByText(/4 to 24 characters/i);
-  //   expect(errorMessage).toBeInTheDocument();
-  // });
+    const errorMessage = screen.getByText(/4 to 24 characters/i);
+    expect(errorMessage).toBeInTheDocument();
+  });
 
-  // test("validates password correctly", () => {
-  //   render(<Register />);
+  test("validates password correctly", () => {
+    render(<Register />);
 
-  //   const passwordInput = screen.getByLabelText("Password:");
-  //   fireEvent.change(passwordInput, { target: { value: "short" } }); // Invalid password
-  //   fireEvent.blur(passwordInput);
+    const passwordInput = screen.getByLabelText("Password:");
+    fireEvent.change(passwordInput, { target: { value: "short" } }); // Invalid password
+    fireEvent.blur(passwordInput);
 
-  //   const errorMessage = screen.getByText(/8 to 24 characters/i);
-  //   expect(errorMessage).toBeInTheDocument();
-  // });
+    const errorMessage = screen.getByText(/8 to 24 characters/i);
+    expect(errorMessage).toBeInTheDocument();
+  });
 
-  // test("shows error message for password mismatch", async () => {
-  //   render(<Register />);
-  //   const passwordInput = screen.getByLabelText("Password:");
-  //   const confirmPasswordInput = screen.getByLabelText("Confirm Password:");
+  test("shows error message for password mismatch", async () => {
+    render(<Register />);
+    const passwordInput = screen.getByLabelText("Password:");
+    const confirmPasswordInput = screen.getByLabelText("Confirm Password:");
 
-  //   fireEvent.change(passwordInput, { target: { value: "Valid1!" } });
-  //   fireEvent.change(confirmPasswordInput, { target: { value: "Mismatch1!" } });
+    fireEvent.change(passwordInput, { target: { value: "Valid1!" } });
+    fireEvent.change(confirmPasswordInput, { target: { value: "Mismatch1!" } });
 
-  //   const errorMessage = screen.getByText(
-  //     /must match the first password input field/i
-  //   );
-  //   expect(errorMessage).toBeInTheDocument();
-  // });
+    const errorMessage = screen.getByText(
+      /must match the first password input field/i
+    );
+    expect(errorMessage).toBeInTheDocument();
+  });
 
   test("submits the form successfully", async () => {
-    // Mock the axios post request to simulate a successful response
+    // Mock the axios post request
     axios.post.mockResolvedValueOnce({
-      data: { message: "User  registered successfully" },
-      accessToken: "mockAccessToken",
+      data: { message: "User registered successfully", accessToken: "mockAccessToken" },
     });
-
-    const { debug } = render(<Register />); // Destructure debug from render
-
+  
+    const { debug } = render(<Register />); // Debug to inspect the DOM if needed
+  
     // Fill in the form fields
     fireEvent.change(screen.getByLabelText("Username:"), {
-      target: { value: "validUser " },
+      target: { value: "validUser" }, // Ensure no trailing spaces
     });
     fireEvent.change(screen.getByLabelText("Password:"), {
       target: { value: "Valid123!" },
@@ -72,56 +72,175 @@ describe("Register Component", () => {
     fireEvent.change(screen.getByLabelText("Confirm Password:"), {
       target: { value: "Valid123!" },
     });
-
+  
     // Submit the form
     fireEvent.click(screen.getByRole("button", { name: /sign up/i }));
-
-    const successMessage = await screen.findByText(/success!/i);
-
-    // Assert that the success message is in the document
+  
+    // Wait for the success message to appear
+    const successMessage = await screen.findByText(/success/i);
+  
+    // Assert the success message is displayed
     expect(successMessage).toBeInTheDocument();
+  
+    // Assert axios.post was called with the correct arguments
+   expect(axios.post).toHaveBeenCalledWith(
+  "/register",
+  JSON.stringify({ user: "validUser", pwd: "Valid123!" }), // Match the JSON string
+  expect.objectContaining({
+    headers: { "Content-Type": "application/json" },
+  })
+);
 
-    // Additional assertions to ensure axios.post was called correctly
-    expect(axios.post).toHaveBeenCalledWith(
-      "/register", // Ensure this matches the API URL in your component
-      JSON.stringify({ user: "validUser", pwd: "Valid123!" }),
-      expect.objectContaining({
-        headers: { "Content-Type": "application/json" },
-      })
-    );
+  });
+test("handles server error response", async () => {
+  // Mock the axios post request to simulate a server error
+  axios.post.mockRejectedValueOnce({
+    response: { status: 500 },
   });
 
-  // test("displays error message when registration fails", async () => {
-  //   // Mock API error response for Username Taken (409 status)
-  //   axios.post.mockRejectedValueOnce({
-  //     response: { status: 409, data: { message: "Username Taken" } },
-  //   });
+  render(<Register />);
 
-  //   // Render the Register component
-  //   render(<Register />);
+  // Fill in the form fields with valid values
+  fireEvent.change(screen.getByLabelText("Username:"), {
+    target: { value: "validUser" },
+  });
+  fireEvent.change(screen.getByLabelText("Password:"), {
+    target: { value: "Valid123!" },
+  });
+  fireEvent.change(screen.getByLabelText("Confirm Password:"), {
+    target: { value: "Valid123!" },
+  });
 
-  //   // Find form elements by their label text (you may need to adjust the labels)
-  //   const usernameInput = screen.getByLabelText("Username:");
-  //   const passwordInput = screen.getByLabelText("Password:");
-  //   const confirmPasswordInput = screen.getByLabelText("Confirm Password:");
-  //   const submitButton = screen.getByText("Sign Up");
+  // Submit the form
+  fireEvent.click(screen.getByRole("button", { name: /sign up/i }));
 
-  //   // Simulate user input
-  //   fireEvent.change(usernameInput, { target: { value: "ValidUser123" } });
-  //   fireEvent.change(passwordInput, { target: { value: "Valid1Password!" } });
-  //   fireEvent.change(confirmPasswordInput, {
-  //     target: { value: "Valid1Password!" },
-  //   });
+  // Wait for the error message to appear
+  const errorMessage = await screen.findByText(/registration failed/i);
 
-  //   // Simulate form submission (button click)
-  //   fireEvent.click(submitButton);
+  // Assert the error message is displayed
+  expect(errorMessage).toBeInTheDocument();
 
-  //   // Wait for the dynamic error message to appear (using findByText to handle async behavior)
-  //   const errorMessage = await screen.findByText((content, element) => {
-  //     return element.textContent.includes("Username Taken");
-  //   });
+  // Assert axios.post was called
+  expect(axios.post).toHaveBeenCalledTimes(1);
+});
 
-  //   // Ensure the error message appears in the document
-  //   expect(errorMessage).toBeInTheDocument();
-  // });
+test("prevents submission with invalid inputs", () => {
+  render(<Register />);
+
+  // Fill in invalid username and password
+  fireEvent.change(screen.getByLabelText("Username:"), {
+    target: { value: "abc" }, // Invalid username
+  });
+  fireEvent.change(screen.getByLabelText("Password:"), {
+    target: { value: "short" }, // Invalid password
+  });
+  fireEvent.change(screen.getByLabelText("Confirm Password:"), {
+    target: { value: "short" },
+  });
+
+  // Attempt to submit the form
+  const submitButton = screen.getByRole("button", { name: /sign up/i });
+  expect(submitButton).toBeDisabled();
+});
+test("displays error message for duplicate username", async () => {
+  // Mock the axios post request to simulate a conflict error
+  axios.post.mockRejectedValueOnce({
+    response: { status: 409 },
+  });
+
+  render(<Register />);
+
+  // Fill in the form fields with valid values
+  fireEvent.change(screen.getByLabelText("Username:"), {
+    target: { value: "existingUser" },
+  });
+  fireEvent.change(screen.getByLabelText("Password:"), {
+    target: { value: "Valid123!" },
+  });
+  fireEvent.change(screen.getByLabelText("Confirm Password:"), {
+    target: { value: "Valid123!" },
+  });
+
+  // Submit the form
+  fireEvent.click(screen.getByRole("button", { name: /sign up/i }));
+
+  // Wait for the error message to appear
+  const errorMessage = await screen.findByText(/username taken/i);
+
+  // Assert the error message is displayed
+  expect(errorMessage).toBeInTheDocument();
+
+  // Assert axios.post was called
+  expect(axios.post).toHaveBeenCalledTimes(1);
+});
+test("validates password complexity edge cases", () => {
+  render(<Register />);
+
+  const passwordInput = screen.getByLabelText("Password:");
+
+  // Test password missing a special character
+  fireEvent.change(passwordInput, { target: { value: "Valid123" } });
+  fireEvent.blur(passwordInput);
+
+  const errorMessage = screen.getByText(/must include uppercase/i);
+  expect(errorMessage).toBeInTheDocument();
+});
+
+test("displays 'No Server Response' on network failure", async () => {
+  // Mock axios to simulate a network error
+  axios.post.mockRejectedValueOnce({});
+
+  render(<Register />);
+
+  // Fill in the form fields with valid values
+  fireEvent.change(screen.getByLabelText("Username:"), {
+    target: { value: "validUser" },
+  });
+  fireEvent.change(screen.getByLabelText("Password:"), {
+    target: { value: "Valid123!" },
+  });
+  fireEvent.change(screen.getByLabelText("Confirm Password:"), {
+    target: { value: "Valid123!" },
+  });
+
+  // Submit the form
+  fireEvent.click(screen.getByRole("button", { name: /sign up/i }));
+
+  // Wait for the error message to appear
+  const errorMessage = await screen.findByText(/no server response/i);
+
+  // Assert the error message is displayed
+  expect(errorMessage).toBeInTheDocument();
+
+  // Assert axios.post was called
+  expect(axios.post).toHaveBeenCalledTimes(1);
+});
+test("prevents submission when fields are empty", () => {
+  render(<Register />);
+
+  const submitButton = screen.getByRole("button", { name: /sign up/i });
+
+  // Initially, all fields are empty, so the button should be disabled
+  expect(submitButton).toBeDisabled();
+
+  // Enter a valid username but leave other fields empty
+  fireEvent.change(screen.getByLabelText("Username:"), {
+    target: { value: "validUser" },
+  });
+  expect(submitButton).toBeDisabled();
+
+  // Fill password but leave confirm password empty
+  fireEvent.change(screen.getByLabelText("Password:"), {
+    target: { value: "Valid123!" },
+  });
+  expect(submitButton).toBeDisabled();
+});
+test("username field gets auto-focused on render", () => {
+  render(<Register />);
+
+  // Assert that the username field is focused
+  const usernameInput = screen.getByLabelText("Username:");
+  expect(usernameInput).toHaveFocus();
+});
+
 });
